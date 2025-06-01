@@ -5,7 +5,6 @@ body {
     scroll-behavior: smooth;
     background-color: #f9fafb; /* Tailwind gray-50 */
     color: #1f2937; /* Tailwind gray-800 */
-    padding-top: 64px;
 }
 
 /* 暗黑模式样式 */
@@ -116,18 +115,20 @@ body {
 
 /* 导航栏样式 */
 .navbar {
+    position: relative; /* Changed from relative for persistent visibility with solid background */
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    padding: 1rem 2rem;
+    padding: 1rem 2rem; /* Added some default padding, adjust as needed */
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 .navbar.transparent {
     background-color: transparent;
+    box-shadow: none;
 }
 .navbar.solid {
     background-color: rgba(255, 255, 255, 0.9); /* Light mode solid */
@@ -137,12 +138,14 @@ body {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #1a202c;
+    color: #1a202c; /* Default logo color for light mode */
 }
 
 .nav-container {
     display: flex;
     align-items: center; /* 确保内容垂直居中 */
+    justify-content: space-between; /* For better spacing if nav-right is far */
+    width: 100%; /* Ensure it spans to allow space-between with nav-right if it's outside */
 }
 
 .nav-links {
@@ -150,6 +153,8 @@ body {
     display: flex;
     gap: 1.5rem;
     align-items: center; /* 确保链接垂直居中 */
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
 }
 .nav-links a {
     text-decoration: none;
@@ -166,7 +171,7 @@ body {
     display: flex;
     align-items: center; /* 确保右侧元素垂直居中 */
     gap: 1rem;
-    margin-left: 1.5rem;
+    /* margin-left: 1.5rem; Removed as nav-container with justify-content handles spacing */
 }
 
 /* 主题切换开关 */
@@ -213,7 +218,12 @@ input:checked + .toggle-label .toggle-ball {
     font-size: 14px;
     transition: opacity 0.2s, transform 0.2s;
     line-height: 1; /* 确保图标行高不会导致额外间距 */
+    color: #4B5563; /* Added color for icons for better visibility on toggle bg */
 }
+.dark .sun-icon, .dark .moon-icon {
+    color: #D1D5DB; /* Dark mode icon color */
+}
+
 .sun-icon { opacity: 1; margin-right: auto; } /* Push sun icon to the left */
 .moon-icon { opacity: 0; margin-left: auto; transform: translateX(-8px); } /* Push moon icon to the right */
 
@@ -236,7 +246,10 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     font-size: 1.8rem;
     cursor: pointer;
     color: #4a5568;
+    background: none; /* Ensure no default button styling */
+    border: none; /* Ensure no default button styling */
     outline: none;
+    padding: 0; /* Ensure no default button styling */
 }
 .menu-toggle:focus {
     color: #1a202c;
@@ -255,11 +268,20 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     height: 50px;
     font-size: 24px;
     cursor: pointer;
-    display: none;
     z-index: 100;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: opacity 0.3s, visibility 0.3s, background-color 0.3s, color 0.3s;
     outline: none;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Start with opacity 0 for fade-in */
+    visibility: hidden; /* Start hidden for transition */
+}
+.back-to-top.visible { /* Class added by JS to show the button */
+    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 .back-to-top:hover,
 .back-to-top:focus {
@@ -298,13 +320,16 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     align-items: center;
     justify-content: center;
     text-align: center;
-    position: relative;
-    color: white;
+    position: relative; /* Keep this for pseudo-elements */
+    color: white; /* Default text color for hero, can be overridden by .hero-content */
     padding: 2rem;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     transition: background-image 0.5s ease-in-out;
+    /* Ensure the main content of the page starts after the fixed navbar */
+    /* padding-top: 80px; Height of navbar + some space, adjust if navbar height changes */
+    /* This padding-top might be better on the first *actual* content section after hero if hero is full viewport */
 }
 /* Light mode Hero Background */
 .hero-section {
@@ -324,11 +349,29 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(99, 102, 241, 0.7), rgba(168, 85, 247, 0.7)); /* Light mode overlay */
-    z-index: 0;
+    /* backdrop-filter: blur(2px); /* Reduced blur for potentially better performance/subtlety */
+    background-image:
+        /* Ensure this path is correct or remove if not used */
+        /* url("/pic/Snipaste_2024-12-15_05-02-18.png"), */ 
+        linear-gradient(to right, rgba(99, 102, 241, 0.7), rgba(122, 189, 90, 0.7)); /* Adjusted second color for variety */
+    background-size: cover, 600% 600%;
+    background-position: center, 0% 50%;
+    background-repeat: no-repeat, no-repeat;
+    animation: gradientMove 20s ease infinite;
+    z-index: 0; /* Should be 0 if .hero-content is z-index: 1 */
 }
+
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
 .dark .hero-section::before {
     background: linear-gradient(to right, rgba(43, 40, 172, 0.75), rgba(97, 28, 150, 0.75)); /* Dark mode overlay */
+    /* backdrop-filter: blur(2px); */ /* Consistent blur for dark mode */
 }
 
 .hero-content {
@@ -340,12 +383,12 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     font-size: 3rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    color: white;
+    color: #ffffff; /* Explicitly white for high contrast on overlay */
 }
 .hero-content p {
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    color: white;
+    color: #f0f0f0; /* Slightly off-white for softer look, ensure contrast */
 }
 .btn { /* General light mode button */
     padding: 0.75rem 1.5rem;
@@ -354,13 +397,15 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     text-decoration: none;
     border-radius: 0.375rem;
     font-weight: 500;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
     display: inline-block;
     outline: none;
+    border: none; /* Ensure no default border */
 }
 .btn:hover,
 .btn:focus {
     background-color: #4f46e5;
+    transform: translateY(-2px); /* Subtle hover effect */
 }
 .hero-section .btn { /* Specific hero button for light mode */
     background-color: #ffffff;
@@ -369,6 +414,15 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
 .hero-section .btn:hover,
 .hero-section .btn:focus {
     background-color: #eef2ff;
+    color: #4f46e5;
+}
+.dark .hero-section .btn { /* Specific hero button for dark mode */
+    background-color: #f9fafb; /* Brighter button */
+    color: #4f46e5; /* Indigo text */
+}
+.dark .hero-section .btn:hover,
+.dark .hero-section .btn:focus {
+    background-color: #e5e7eb; /* Slightly darker hover */
 }
 
 
@@ -376,6 +430,13 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
 .section, .portfolio-section, .alternating-section {
     padding: 4rem 2rem;
 }
+/* Add padding-top to first section after hero if navbar is fixed, to prevent overlap */
+/* For example, if portfolio is the first section after hero: */
+#portfolio.portfolio-section {
+    /* padding-top: calc(4rem + 70px); /* original padding + approx navbar height */
+    /* This is only needed if the navbar is fixed and hero doesn't push content down enough */
+}
+
 .section-title {
     text-align: center;
     margin-bottom: 3rem;
@@ -391,7 +452,7 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     color: #6b7280;
 }
 
-/* 作品集区域 - 增加背景色进行区域划分 */
+/* 作品集区域 */
 .portfolio-section {
     background-color: #f3f4f6; /* Tailwind gray-100 for light mode */
     border-top: 1px solid #e5e7eb; /* Subtle border for separation */
@@ -415,32 +476,43 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     border-bottom: 1px solid #2d3748;
 }
 
-/* 将 masonry-grid 变为 flex 容器 */
 .masonry-grid {
     display: flex; /* 改为 flex 布局 */
     gap: 1.5rem; /* 元素之间的间距 */
     padding: 0 2rem; /* 两侧留白 */
-    align-items: flex-start; /* 垂直顶部对齐，如果项目高度不同 */
-    scroll-snap-align: center; /* 滚动时每个项目居中吸附 */
-    min-height: 400px; /* 增加最小高度以避免内容太少时抖动不明显 */
-    /* 移除原有的 grid 相关的属性 */
-    grid-template-columns: none;
+    align-items: stretch; /* Stretch items to be same height if needed, or flex-start */
+    /* scroll-snap-align: center; /* This should be on child items for snapping */
+    min-height: 400px; 
 }
 .masonry-item {
-    flex: 0 0 auto; /* 不增长，不收缩，基于内容宽度 */
-    width: 300px; /* 固定宽度，可以根据需要调整 */
+    flex: 0 0 auto; 
+    width: 300px; 
     position: relative;
     overflow: hidden;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, background-color 0.3s; /* 添加背景色过渡 */
+    transition: transform 0.3s ease, background-color 0.3s, box-shadow 0.3s;
     background-color: #fff;
-    height: 350px; /* 设定一个固定高度，使项目高度一致 */
-    display: flex; /* 用于内容居中 */
+    height: 350px; 
+    display: flex; 
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* Center overlay content if image is bg */
     align-items: center;
     text-align: center;
+    scroll-snap-align: center; /* Snap individual items to center */
+    text-decoration: none; /* Remove underline from link */
+}
+/* If masonry-item has an image inside that should fill it: */
+.masonry-item .masonry-img { /* Ensure this class is on an img tag if used */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+    position: absolute; /* Position image behind overlay */
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 .dark .masonry-item {
     background-color: #1f2937;
@@ -448,18 +520,15 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
 }
 
 .masonry-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02); /* Added scale for more pop */
+    box-shadow: 0 8px 12px rgba(0,0,0,0.15);
 }
-.masonry-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
+.masonry-item:hover .masonry-img { /* Optional: zoom image on hover */
+    transform: scale(1.1);
 }
 
 .masonry-overlay {
-    position: absolute;
+    position: absolute; /* Changed from relative to absolute if item is relative */
     top: 0;
     left: 0;
     width: 100%;
@@ -473,7 +542,7 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     padding: 1rem;
-    z-index: 1;
+    z-index: 1; /* Above masonry-img if it exists */
 }
 .masonry-item:hover .masonry-overlay {
     opacity: 1;
@@ -484,7 +553,6 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     color: #ffffff;
     margin-bottom: 0;
 }
-/* Hide description and button in the new overlay effect */
 .masonry-overlay .masonry-desc,
 .masonry-overlay .portfolio-btn {
     display: none;
@@ -500,19 +568,30 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     border-radius: 0.25rem;
     font-size: 0.75rem;
     font-weight: 500;
-    z-index: 2;
+    z-index: 2; /* Above overlay */
 }
 /* 滚动抖动效果的动画定义 */
 @keyframes shake {
     0%, 100% { transform: translateX(0) translateY(0); }
-    25% { transform: translateX(-5px) translateY(-2px); }
-    50% { transform: translateX(5px) translateY(2px); }
-    75% { transform: translateX(-5px) translateY(-2px); }
+    25% { transform: translateX(-3px) translateY(-1px); } /* Reduced shake intensity */
+    50% { transform: translateX(3px) translateY(1px); }
+    75% { transform: translateX(-3px) translateY(-1px); }
 }
 
-.shaking {
-    animation: shake 0.3s ease-in-out;
+.shaking { /* This class is added to portfolio-section */
+    /* The animation will affect the scroll container, not individual items.
+       If you want items to shake, apply to .masonry-item when portfolio is scrolled.
+       However, animating the scroll container itself might be odd.
+       Consider if this effect is truly desired on the container.
+       If it's for items, the JS logic would need to target items.
+    */
+    /* For now, assume it's for the container as per JS: */
+    /* animation: shake 0.3s ease-in-out; */
+    /* Disabling shake on container as it might be visually disruptive on scroll.
+       If desired on items, JS needs to target items.
+    */
 }
+
 
 /* 鼠标轨迹动效 */
 .mouse-trail {
@@ -523,10 +602,17 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     border-radius: 50%;
     pointer-events: none; /* 确保它不影响鼠标事件 */
     opacity: 0;
+    /* transform: translate(-50%, -50%); /* This will be handled by JS if setting top/left directly */
+    /* If JS sets transform: translate(x,y) then this can be removed.
+       If JS sets top/left, this is needed for centering. Keeping for now.
+    */
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease-out, transform 0.1s linear, background-color 0.3s ease-out; /* transform 更快 */
+    transition: opacity 0.3s ease-out, background-color 0.3s ease-out;
+    /* Removed transform from transition here; JS will update it directly or rapidly */
     z-index: 9999; /* 确保在最上层 */
     box-shadow: 0 0 15px rgba(99, 102, 241, 0.7); /* 发光效果 */
+    left: 0; /* Initial position for JS to update */
+    top: 0;  /* Initial position for JS to update */
 }
 
 .dark .mouse-trail {
@@ -534,10 +620,9 @@ input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0);
     box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); /* 发光效果 */
 }
 
-/* 鼠标悬停时显示 */
-body:hover .mouse-trail {
-    opacity: 1;
-}
+/* body:hover .mouse-trail { /* JS will handle opacity on mousemove/mouseleave */
+/* opacity: 1; */
+/* } */
 
 
 /* 图文区域 */
@@ -545,12 +630,14 @@ body:hover .mouse-trail {
     background-color: #f9fafb; /* Tailwind gray-50 */
 }
 .dark .alternating-section {
-    background-color: #1a202c; /* Tailwind gray-900, darker than body background for distinction */
+    background-color: #1a202c; /* Tailwind gray-900 */
 }
 .alternating-container {
     display: flex;
     flex-direction: column;
     gap: 3rem;
+    max-width: 1100px; /* Optional: constrain width for better readability */
+    margin: 0 auto; /* Center if max-width is set */
 }
 .alternating-item {
     display: flex;
@@ -561,23 +648,31 @@ body:hover .mouse-trail {
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.alternating-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
 }
 .dark .alternating-item {
-    background-color: #1f2937; /* Tailwind gray-800 */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Darker shadow */
+    background-color: #1f2937; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
-.alternating-item.even {
-    /* Styles for even items if different layout needed on larger screens */
+.dark .alternating-item:hover {
+    box-shadow: 0 8px 12px rgba(0,0,0,0.4);
 }
+
 .alternating-img {
     flex: 1;
-    max-width: 500px;
+    max-width: 100%; /* Ensure image is responsive within its container */
+    /* max-width: 500px; /* Re-evaluate this if using flex-basis on larger screens */
 }
 .alternating-img img {
     width: 100%;
     height: auto;
     border-radius: 0.5rem;
     object-fit: cover;
+    max-height: 350px; /* Optional: constrain image height */
 }
 .alternating-content {
     flex: 1;
@@ -593,11 +688,11 @@ body:hover .mouse-trail {
 }
 .alternating-content p {
     color: #4b5563;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* Increased margin for button spacing */
     line-height: 1.7;
 }
 .dark .alternating-content p {
-    color: #a0aec0; /* Tailwind gray-500 */
+    color: #a0aec0; 
 }
 
 
@@ -606,10 +701,10 @@ footer {
     background-color: #111827;
     color: #9ca3af;
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 1rem; /* Adjusted padding */
 }
 .dark footer {
-    background-color: #0c121e;
+    background-color: #0c121e; /* Even darker for footer in dark mode */
     color: #7d848f;
 }
 
@@ -626,19 +721,24 @@ footer {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    .navbar {
+        padding: 1rem; /* Adjust padding for mobile */
+    }
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
+        top: 100%; /* Position below the navbar */
         left: 0;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 0.98); /* Slightly more opaque */
         padding: 1rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-top: 1px solid #e5e7eb; /* Separator */
     }
     .dark .nav-links {
-        background-color: rgba(17, 24, 39, 0.95);
+        background-color: rgba(17, 24, 39, 0.98);
+        border-top: 1px solid #374151;
     }
     .nav-links.active {
         display: flex;
@@ -647,17 +747,19 @@ footer {
         margin-bottom: 1rem;
         text-align: center;
     }
+    .nav-links li:last-child {
+        margin-bottom: 0;
+    }
     .menu-toggle {
         display: block;
     }
-    .nav-right {
-        margin-left: 0;
-    }
+    /* .nav-right { margin-left: 0; } /* Already handled by flex spacing */
+
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem; /* Slightly smaller for mobile */
     }
     .hero-content p {
-        font-size: 1rem;
+        font-size: 1.125rem; /* Slightly smaller for mobile */
     }
     .section-title h2 {
         font-size: 1.875rem;
@@ -665,47 +767,43 @@ footer {
     .section-title p {
         font-size: 1rem;
     }
+    .masonry-grid {
+        padding: 0 1rem; /* Less padding on mobile for grid */
+    }
+    .masonry-item {
+        width: 280px; /* Slightly smaller items on mobile */
+        height: 320px;
+    }
     .masonry-overlay .masonry-title {
         font-size: 1.25rem;
+    }
+    .alternating-item {
+        padding: 1.5rem; /* Adjust padding */
+    }
+    .alternating-content h3 {
+        font-size: 1.5rem;
     }
 }
 
 @media (min-width: 769px) {
     .alternating-item {
         flex-direction: row;
+        /* text-align: left; /* Align text to left on wider screens */
     }
     .alternating-item.even {
         flex-direction: row-reverse;
     }
+    .alternating-img {
+        flex-basis: 45%; /* Control image width */
+        max-width: 45%;
+    }
     .alternating-content {
+        flex-basis: 50%; /* Control content width */
         padding-left: 2rem;
+        /* text-align: left; */
     }
     .alternating-item.even .alternating-content {
         padding-left: 0;
         padding-right: 2rem;
-    }
-}
-
-.single-page-content {
-    /* 请根据你的导航栏实际高度调整这个值，例如 72px, 80px 等 */
-    padding-top: 80px; 
-    /* 建议添加一些左右内边距，使内容不紧贴浏览器边缘 */
-    padding-left: 1.5rem; /* 例如 24px */
-    padding-right: 1.5rem; /* 例如 24px */
-    /* 也可以添加一些底部内边距 */
-    padding-bottom: 2rem; /* 例如 32px */
-    /* 如果你希望内容居中显示，可以设置最大宽度和水平居中 */
-    max-width: 960px; /* 根据设计调整 */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 针对移动端适配 */
-@media (max-width: 768px) {
-    .single-page-content {
-        /* 移动端导航栏可能更高，或者你希望内容有更多顶部空间 */
-        padding-top: 100px; /* 根据移动端导航栏实际高度调整 */
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 }
