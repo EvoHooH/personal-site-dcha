@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body class="light">
+    {{ partial "header.html" . }}
+
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+        <span class="btt-tooltip">返回顶部</span>
+    </button>
+
+    <div class="mouse-trail"></div>
+
+    {{ partial "head/js.html" . }} </body>
+</html>

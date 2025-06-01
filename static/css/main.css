@@ -1,0 +1,711 @@
+/* 基本样式和自定义样式 */
+body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+    scroll-behavior: smooth;
+    background-color: #f9fafb; /* Tailwind gray-50 */
+    color: #1f2937; /* Tailwind gray-800 */
+    padding-top: 64px;
+}
+
+/* 暗黑模式样式 */
+.dark {
+    background-color: #111827; /* 更深的背景，Tailwind gray-900+ */
+    color: #e5e7eb; /* 更亮的文字，Tailwind gray-200 */
+}
+.dark .navbar {
+    background-color: rgba(17, 24, 39, 0.9); /* Tailwind gray-900 with opacity */
+    border-bottom-color: #374151; /* Tailwind gray-700 */
+}
+.dark .navbar.solid {
+    background-color: #111827; /* Tailwind gray-950 */
+}
+.dark .nav-links a {
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+.dark .nav-links a:hover,
+.dark .nav-links a:focus {
+    color: #f9fafb; /* Tailwind gray-50 */
+}
+.dark .logo {
+    color: #f9fafb; /* Tailwind gray-50 */
+}
+.dark .section-title h2 { color: #f9fafb; }
+.dark .section-title p { color: #a0aec0; }
+.dark .hero-content h1, .dark .hero-content p {
+    color: #f9fafb;
+}
+
+/* 作品集悬浮效果 - 暗黑模式 */
+.dark .masonry-overlay {
+    background-color: rgba(79, 70, 229, 0.75); /* Semi-transparent Indigo-600 */
+}
+.dark .masonry-overlay .masonry-title {
+    color: #f0f9ff; /* Light blueish white for better pop on dark indigo */
+}
+
+.dark .masonry-category {
+    background-color: #374151; /* Tailwind gray-700 */
+    color: #d1d5db; /* Tailwind gray-300 */
+}
+/* 确保作品集项在暗黑模式下变黑 */
+.dark .masonry-item {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Darker shadow */
+}
+
+.dark .alternating-item {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Darker shadow */
+}
+.dark .alternating-content h3 {
+    color: #f9fafb;
+}
+.dark .alternating-content p {
+    color: #a0aec0; /* Tailwind gray-500 */
+}
+.dark .btn { /* General dark mode button */
+    background-color: #4f46e5; /* Indigo-600 */
+    color: #e0e7ff; /* Indigo-100 */
+}
+.dark .btn:hover,
+.dark .btn:focus {
+    background-color: #4338ca; /* Indigo-700 */
+}
+.dark footer {
+    background-color: #0b101b; /* Tailwind gray-950 */
+    color: #9ca3af; /* Tailwind gray-400 */
+}
+/* 返回顶部按钮 - 暗黑模式 */
+.dark .back-to-top {
+    background-color: #4a5568; /* Tailwind gray-600 */
+    color: #e2e8f0; /* Tailwind gray-300 */
+}
+.dark .back-to-top:hover,
+.dark .back-to-top:focus {
+    background-color: #374151; /* Tailwind gray-700 */
+}
+.dark .btt-tooltip {
+    background-color: #374151; /* Tailwind gray-700 */
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+.dark .menu-toggle {
+    color: #e2e8f0;
+}
+.dark .social-icons a {
+    color: #e2e8f0;
+}
+.dark .social-icons a:hover,
+.dark .social-icons a:focus {
+    color: #cbd5e0; /* Tailwind gray-400 */
+}
+.dark .toggle-label {
+    background-color: #4a5568; /* Tailwind gray-700 */
+}
+.dark .toggle-ball {
+    background-color: #e2e8f0; /* Tailwind gray-300 */
+}
+.dark input:checked + .toggle-label .toggle-ball {
+    transform: translateX(26px); /* 调整以适应标签宽度 */
+}
+.dark input:checked + .toggle-label {
+    background: #4f46e5; /* Indigo for dark mode checked */
+}
+
+
+/* 导航栏样式 */
+.navbar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar.transparent {
+    background-color: transparent;
+}
+.navbar.solid {
+    background-color: rgba(255, 255, 255, 0.9); /* Light mode solid */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1a202c;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center; /* 确保内容垂直居中 */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center; /* 确保链接垂直居中 */
+}
+.nav-links a {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-links a:hover,
+.nav-links a:focus {
+    color: #1a202c;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center; /* 确保右侧元素垂直居中 */
+    gap: 1rem;
+    margin-left: 1.5rem;
+}
+
+/* 主题切换开关 */
+.theme-toggle {
+    position: relative;
+    display: flex; /* 使用 flexbox 对齐内部图标 */
+    align-items: center; /* 垂直居中图标 */
+}
+.toggle-switch {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+.toggle-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 50px;
+    height: 26px;
+    background: #d1d5db;
+    border-radius: 100px;
+    position: relative;
+    transition: background-color .2s;
+    padding: 0 4px;
+    box-sizing: border-box; /* 确保内边距不会增加总宽度 */
+}
+.toggle-ball {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    transition: 0.2s;
+    background: white;
+    box-shadow: 0 0 2px 0 rgba(10, 10, 10, 0.29);
+}
+input:checked + .toggle-label .toggle-ball {
+    transform: translateX(24px);
+}
+.sun-icon, .moon-icon {
+    font-size: 14px;
+    transition: opacity 0.2s, transform 0.2s;
+    line-height: 1; /* 确保图标行高不会导致额外间距 */
+}
+.sun-icon { opacity: 1; margin-right: auto; } /* Push sun icon to the left */
+.moon-icon { opacity: 0; margin-left: auto; transform: translateX(-8px); } /* Push moon icon to the right */
+
+input:checked + .toggle-label .sun-icon { opacity: 0; transform: translateX(8px); }
+input:checked + .toggle-label .moon-icon { opacity: 1; transform: translateX(0); }
+
+.social-icons a {
+    color: #4a5568;
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+.social-icons a:hover,
+.social-icons a:focus {
+    color: #1a202c;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #4a5568;
+    outline: none;
+}
+.menu-toggle:focus {
+    color: #1a202c;
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: opacity 0.3s, visibility 0.3s, background-color 0.3s, color 0.3s;
+    outline: none;
+}
+.back-to-top:hover,
+.back-to-top:focus {
+    background-color: #2563eb;
+}
+
+.btt-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background-color: #374151;
+    color: white;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    transition-delay: 0s;
+    z-index: 110;
+}
+.back-to-top:hover .btt-tooltip,
+.back-to-top:focus .btt-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.4s;
+}
+
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    color: white;
+    padding: 2rem;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image 0.5s ease-in-out;
+}
+/* Light mode Hero Background */
+.hero-section {
+    background-image: url('https://images.unsplash.com/photo-1510519129596-fbc21e7d23dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); /* Light Mode Image */
+}
+
+/* Dark mode Hero Background */
+.dark .hero-section {
+    background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4cd085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); /* Dark Mode Image */
+}
+
+/* Gradient Overlay for Hero Section (to ensure text readability) */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(99, 102, 241, 0.7), rgba(168, 85, 247, 0.7)); /* Light mode overlay */
+    z-index: 0;
+}
+.dark .hero-section::before {
+    background: linear-gradient(to right, rgba(43, 40, 172, 0.75), rgba(97, 28, 150, 0.75)); /* Dark mode overlay */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+}
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+.btn { /* General light mode button */
+    padding: 0.75rem 1.5rem;
+    background-color: #6366f1;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    display: inline-block;
+    outline: none;
+}
+.btn:hover,
+.btn:focus {
+    background-color: #4f46e5;
+}
+.hero-section .btn { /* Specific hero button for light mode */
+    background-color: #ffffff;
+    color: #6366f1;
+}
+.hero-section .btn:hover,
+.hero-section .btn:focus {
+    background-color: #eef2ff;
+}
+
+
+/* Section通用样式 */
+.section, .portfolio-section, .alternating-section {
+    padding: 4rem 2rem;
+}
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.section-title h2 {
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #111827;
+}
+.section-title p {
+    font-size: 1.125rem;
+    color: #6b7280;
+}
+
+/* 作品集区域 - 增加背景色进行区域划分 */
+.portfolio-section {
+    background-color: #f3f4f6; /* Tailwind gray-100 for light mode */
+    border-top: 1px solid #e5e7eb; /* Subtle border for separation */
+    border-bottom: 1px solid #e5e7eb;
+    padding: 4rem 0; /* 修改 padding，因为内容将横向滚动 */
+    overflow-x: auto; /* 允许水平滚动 */
+    white-space: nowrap; /* 强制所有子元素在同一行 */
+    -webkit-overflow-scrolling: touch; /* 改善 iOS 上的滚动体验 */
+    scroll-snap-type: x mandatory; /* 添加滚动吸附效果，使每个作品停在中心 */
+    scrollbar-width: none; /* 隐藏 Firefox 滚动条 */
+    -ms-overflow-style: none; /* 隐藏 IE/Edge 滚动条 */
+}
+/* 隐藏 Chrome, Safari 和 Opera 的滚动条 */
+.portfolio-section::-webkit-scrollbar {
+    display: none;
+}
+
+.dark .portfolio-section {
+    background-color: #1a202c; /* Tailwind gray-900 for dark mode */
+    border-top: 1px solid #2d3748;
+    border-bottom: 1px solid #2d3748;
+}
+
+/* 将 masonry-grid 变为 flex 容器 */
+.masonry-grid {
+    display: flex; /* 改为 flex 布局 */
+    gap: 1.5rem; /* 元素之间的间距 */
+    padding: 0 2rem; /* 两侧留白 */
+    align-items: flex-start; /* 垂直顶部对齐，如果项目高度不同 */
+    scroll-snap-align: center; /* 滚动时每个项目居中吸附 */
+    min-height: 400px; /* 增加最小高度以避免内容太少时抖动不明显 */
+    /* 移除原有的 grid 相关的属性 */
+    grid-template-columns: none;
+}
+.masonry-item {
+    flex: 0 0 auto; /* 不增长，不收缩，基于内容宽度 */
+    width: 300px; /* 固定宽度，可以根据需要调整 */
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, background-color 0.3s; /* 添加背景色过渡 */
+    background-color: #fff;
+    height: 350px; /* 设定一个固定高度，使项目高度一致 */
+    display: flex; /* 用于内容居中 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.dark .masonry-item {
+    background-color: #1f2937;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.masonry-item:hover {
+    transform: translateY(-5px);
+}
+.masonry-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.masonry-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(99, 102, 241, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    padding: 1rem;
+    z-index: 1;
+}
+.masonry-item:hover .masonry-overlay {
+    opacity: 1;
+}
+.masonry-overlay .masonry-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+/* Hide description and button in the new overlay effect */
+.masonry-overlay .masonry-desc,
+.masonry-overlay .portfolio-btn {
+    display: none;
+}
+
+.masonry-category {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255,255,255,0.8);
+    color: #374151;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    z-index: 2;
+}
+/* 滚动抖动效果的动画定义 */
+@keyframes shake {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(-5px) translateY(-2px); }
+    50% { transform: translateX(5px) translateY(2px); }
+    75% { transform: translateX(-5px) translateY(-2px); }
+}
+
+.shaking {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* 鼠标轨迹动效 */
+.mouse-trail {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(99, 102, 241, 0.5); /* Indigo-500 透明 */
+    border-radius: 50%;
+    pointer-events: none; /* 确保它不影响鼠标事件 */
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-out, transform 0.1s linear, background-color 0.3s ease-out; /* transform 更快 */
+    z-index: 9999; /* 确保在最上层 */
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.7); /* 发光效果 */
+}
+
+.dark .mouse-trail {
+    background-color: rgba(168, 85, 247, 0.5); /* Purple-500 透明 */
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.7); /* 发光效果 */
+}
+
+/* 鼠标悬停时显示 */
+body:hover .mouse-trail {
+    opacity: 1;
+}
+
+
+/* 图文区域 */
+.alternating-section {
+    background-color: #f9fafb; /* Tailwind gray-50 */
+}
+.dark .alternating-section {
+    background-color: #1a202c; /* Tailwind gray-900, darker than body background for distinction */
+}
+.alternating-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+.alternating-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+.dark .alternating-item {
+    background-color: #1f2937; /* Tailwind gray-800 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Darker shadow */
+}
+.alternating-item.even {
+    /* Styles for even items if different layout needed on larger screens */
+}
+.alternating-img {
+    flex: 1;
+    max-width: 500px;
+}
+.alternating-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+.alternating-content {
+    flex: 1;
+}
+.alternating-content h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+.dark .alternating-content h3 {
+    color: #f9fafb;
+}
+.alternating-content p {
+    color: #4b5563;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+.dark .alternating-content p {
+    color: #a0aec0; /* Tailwind gray-500 */
+}
+
+
+/* 页脚 */
+footer {
+    background-color: #111827;
+    color: #9ca3af;
+    text-align: center;
+    padding: 2rem;
+}
+.dark footer {
+    background-color: #0c121e;
+    color: #7d848f;
+}
+
+/* 淡入动画 */
+.fade-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .dark .nav-links {
+        background-color: rgba(17, 24, 39, 0.95);
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .nav-links li {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .nav-right {
+        margin-left: 0;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .section-title h2 {
+        font-size: 1.875rem;
+    }
+    .section-title p {
+        font-size: 1rem;
+    }
+    .masonry-overlay .masonry-title {
+        font-size: 1.25rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .alternating-item {
+        flex-direction: row;
+    }
+    .alternating-item.even {
+        flex-direction: row-reverse;
+    }
+    .alternating-content {
+        padding-left: 2rem;
+    }
+    .alternating-item.even .alternating-content {
+        padding-left: 0;
+        padding-right: 2rem;
+    }
+}
+
+.single-page-content {
+    /* 请根据你的导航栏实际高度调整这个值，例如 72px, 80px 等 */
+    padding-top: 80px; 
+    /* 建议添加一些左右内边距，使内容不紧贴浏览器边缘 */
+    padding-left: 1.5rem; /* 例如 24px */
+    padding-right: 1.5rem; /* 例如 24px */
+    /* 也可以添加一些底部内边距 */
+    padding-bottom: 2rem; /* 例如 32px */
+    /* 如果你希望内容居中显示，可以设置最大宽度和水平居中 */
+    max-width: 960px; /* 根据设计调整 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 针对移动端适配 */
+@media (max-width: 768px) {
+    .single-page-content {
+        /* 移动端导航栏可能更高，或者你希望内容有更多顶部空间 */
+        padding-top: 100px; /* 根据移动端导航栏实际高度调整 */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

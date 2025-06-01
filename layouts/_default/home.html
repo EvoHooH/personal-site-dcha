@@ -1,0 +1,71 @@
+{{ define "main" }}
+<section id="home" class="hero-section">
+    <div class="hero-content fade-element">
+        <h1>欢迎来到我的数字世界</h1>
+        <p>个人网站用于记录一些练习，杂记</p>
+        <a href="#portfolio" class="btn">查看作品集</a>
+    </div>
+</section>
+
+<section id="portfolio" class="portfolio-section">
+    <div class="section-title fade-element">
+        <h2>近期练习</h2>
+        <p>随手练习以及一些笔记</p>
+    </div>
+   <div class="masonry-grid">
+    {{ range .Site.RegularPages.ByDate.Reverse }} <a href="{{ .RelPermalink }}" class="masonry-item fade-element">
+        {{ with .Params.image }}
+        <img src="{{ . | relURL }}" alt="{{ .Title }}" class="masonry-img">
+        {{ end }}
+        {{ with .Params.categories }}
+        <div class="masonry-category">{{ index . 0 }}</div> {{ end }}
+        <div class="masonry-overlay">
+            <h3 class="masonry-title">{{ .Title }}</h3>
+        </div>
+    </a>
+    {{ end }}
+</div>
+</section>
+
+<section id="about" class="alternating-section">
+    <div class="section-title fade-element">
+        <h2>关于我</h2>
+        <p>我的故事与技能</p>
+    </div>
+    <div class="alternating-container">
+        <div class="alternating-item fade-element">
+            <div class="alternating-img">
+                <img src="https://via.placeholder.com/500x300/6366f1/ffffff?text=About+Image+1" alt="About Me 1">
+            </div>
+            <div class="alternating-content">
+                <h3>我是一个充满激情的设计师</h3>
+                <p>我热衷于创造美观且用户友好的界面。从概念到实现，我致力于将复杂的问题转化为简洁直观的解决方案。</p>
+                <a href="#" class="btn">了解更多</a>
+            </div>
+        </div>
+        <div class="alternating-item even fade-element">
+            <div class="alternating-img">
+                <img src="https://via.placeholder.com/500x300/ef4444/ffffff?text=About+Image+2" alt="About Me 2">
+            </div>
+            <div class="alternating-content">
+                <h3>技术栈与专业技能</h3>
+                <p>我精通前端开发技术，包括 HTML, CSS, JavaScript, 以及各种现代框架。我持续学习新工具和最佳实践，以保持我的技能处于前沿。</p>
+                <a href="#" class="btn">我的技能</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="section">
+    <div class="section-title fade-element">
+        <h2>联系我</h2>
+        <p>期待与您合作</p>
+    </div>
+    <div class="contact-form-placeholder fade-element">
+        <p>有项目想法或想聊聊？请通过以下方式联系我：</p>
+        <p>邮箱: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+        <p>电话: +182 5836 5314</p>
+        <p>或者在社交媒体上找到我。</p>
+    </div>
+</section>
+{{ end }}
