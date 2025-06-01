@@ -1,7 +1,7 @@
 baseURL = 'https://example.org/'
 languageCode = 'en-US'
 title = 'My New Hugo Site'
-
+publishDir = "docs"
 [[menus.main]]
 name = 'Home'
 pageRef = '/'
